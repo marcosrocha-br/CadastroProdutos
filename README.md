@@ -1,5 +1,5 @@
 Em desenvolvimento...
-# Aplicativo Java simples para cadastrar produtos
+# Sistema em Java para controle de estoque
 
 
 ### Recursos utilizados:
