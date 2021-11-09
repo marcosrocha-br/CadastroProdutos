@@ -5,4 +5,4 @@ Em desenvolvimento...
 ### Recursos utilizados:
 * NetBeans IDE 12.4
 * Java 8
-* Apache derby 10.14 2
+* Postgresql 12

@@ -9,17 +9,15 @@ import java.sql.SQLException;
 public class ControleDao {
     
     private Connection conexao;
-    private PreparedStatement sql;
-    private ResultSet lista;
             
-    private String url = "jdbc:derby://localhost:1527/controle-estoque";
+    private String url = "jdbc:postgresql://localhost:5432/controle_estoque";
     private String usuario = "controle";
     private String senha = "123";
     
     public ControleDao(){
         try{
             
-            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            Class.forName("org.postgresql.Driver");
             this.conexao = DriverManager.getConnection(url, usuario, senha);
             
         }catch(ClassNotFoundException | SQLException e){
@@ -30,16 +28,18 @@ public class ControleDao {
    
     public void getProdutos(){
         try{
-            sql = conexao.prepareStatement("SELECT * FROM PRODUTOS");
-            lista = sql.executeQuery();
+            PreparedStatement sql = conexao.prepareStatement("SELECT * FROM PRODUTOS");
+            ResultSet lista = sql.executeQuery();
+            
 
             while(lista.next()){
                 int id = lista.getInt("id");
                 String nome = lista.getString("nome");
                 int quantidade = lista.getInt("quantidade");
-                double valor = lista.getDouble("valor");
+                float valorUnitario = lista.getFloat("valor");
+                float valorTotal = lista.getFloat("valorTotal");
 
-                System.out.printf("%-2d\t%-15s\t%-15d\tR$ %.2f\n",id, nome, quantidade, valor);
+                System.out.printf("%-2d\t%-15s\t%-15d\tR$ %.2f\t\tR$ %.2f\n",id, nome, quantidade, valorUnitario, valorTotal);
             }                
 
         }catch(SQLException e){
@@ -47,13 +47,15 @@ public class ControleDao {
         }  
     }
 
-    public void setInserir(String nome, int quantidade, double valor){
+    public void setInserir(String nome, int quantidade, float valor){
         try{
-            sql = conexao.prepareStatement("INSERT INTO PRODUTOS (NOME, QUANTIDADE, VALOR) VALUES (?, ?, ?)");
+            PreparedStatement sql = conexao.prepareStatement("INSERT INTO PRODUTOS (NOME, QUANTIDADE, VALOR) VALUES (?, ?, ?)");
+            PreparedStatement sqlupdate = conexao.prepareStatement("update produtos set valorTotal = valor*quantidade");
             sql.setString(1, nome);
             sql.setInt(2, quantidade);
-            sql.setDouble(3, valor);
+            sql.setFloat(3, valor);
             sql.execute();
+            sqlupdate.execute();
 
             System.out.println("Produto cadastrado!");
 
@@ -64,7 +66,7 @@ public class ControleDao {
 
     public void setNome(int id, String nome){
         try{
-            sql = conexao.prepareStatement("UPDATE PRODUTOS SET NOME = ? WHERE ID = ?");
+            PreparedStatement sql = conexao.prepareStatement("UPDATE PRODUTOS SET NOME = ? WHERE ID = ?");
             sql.setString(1, nome);
             sql.setInt(2, id);
             sql.execute();
@@ -76,7 +78,7 @@ public class ControleDao {
 
     public void setQuantidade(int id, int quantidade){
         try{
-            sql = conexao.prepareStatement("UPDATE PRODUTOS SET QUANTIDADE = ? WHERE ID = ?");
+            PreparedStatement sql = conexao.prepareStatement("UPDATE PRODUTOS SET QUANTIDADE = ? WHERE ID = ?");
             sql.setInt(1, quantidade);
             sql.setInt(2, id);
             sql.execute();
@@ -86,10 +88,10 @@ public class ControleDao {
         }
     }
 
-    public void setValor(int id, double valor){
+    public void setValor(int id, float valor){
         try{
-            sql = conexao.prepareStatement("UPDATE PRODUTOS SET VALOR = ? WHERE ID = ?");
-            sql.setDouble(1, valor);
+            PreparedStatement sql = conexao.prepareStatement("UPDATE PRODUTOS SET VALOR = ? WHERE ID = ?");
+            sql.setFloat(1, valor);
             sql.setInt(2, id);
             sql.execute();
 
@@ -100,7 +102,7 @@ public class ControleDao {
 
     public void setDelete(int id){
         try{
-            sql = conexao.prepareStatement("DELETE FROM PRODUTOS WHERE ID = ?");
+            PreparedStatement sql = conexao.prepareStatement("DELETE FROM PRODUTOS WHERE ID = ?");
             sql.setInt(1, id);
             sql.execute();
 

@@ -1,12 +1,10 @@
 package ControleEstoque;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 import dao.ControleDao;
 import java.util.Scanner;
 
 /**
- *
  * @author Marcos Rocha
  */
 
@@ -24,14 +22,14 @@ public class Main {
         return resposta;
     }
     
-    public static void main(String[] args) throws SQLException, ClassNotFoundException{
+    public static void main(String[] args){
         
         Scanner input = new Scanner(System.in);
         ControleDao dao = new ControleDao();
        
         String R, nome, conteudo;
         int id, quantidade;
-        double valor;
+        float valor;
         
         System.out.println("\tCONTROLE DE ESTOQUE\n");
         R = Acao();
@@ -39,7 +37,7 @@ public class Main {
         while(!R.equals("s")){
             switch(R){
                 case "l"://SELECT
-                    System.out.printf("\n%-2s\t%-15s\t%-15S\t%S\n","ID", "NOME", "QUANTIDADE", "VALOR");
+                    System.out.printf("\n%-2s\t%-15s\t%-15S\t%-15S\t%S\n","ID", "NOME", "QUANTIDADE", "VALOR UNITARIO", "VALOR TOTAL");
                     dao.getProdutos();
                     break;
                 case "i"://INSERT
@@ -54,7 +52,7 @@ public class Main {
                     quantidade = input.nextInt();
 
                     System.out.print("Valor: R$ ");
-                    valor = input.nextDouble();
+                    valor = input.nextFloat();
                     
                     dao.setInserir(nome, quantidade, valor);
                     
@@ -84,7 +82,7 @@ public class Main {
                             input.nextLine();//Limpeza de buffer
                             
                             System.out.print("Valor: ");
-                            valor = input.nextDouble();
+                            valor = input.nextFloat();
                             dao.setValor(id, valor);
                             break;
                         default:
