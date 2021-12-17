@@ -3,6 +3,6 @@ Em desenvolvimento...
 
 
 ### Recursos utilizados:
-* NetBeans IDE 12.4
+* Eclipse - 2021-09
 * Java 8
 * Postgresql 12
