@@ -1,8 +1,8 @@
-Em desenvolvimento...
-# Sistema em Java para controle de estoque
+Building...
+# Java system for Stock Control
 
 
-### Recursos utilizados:
+### Resources:
 * Eclipse - 2021-09
 * Java 8
 * Postgresql 12
