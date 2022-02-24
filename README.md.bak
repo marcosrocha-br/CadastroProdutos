@@ -4,5 +4,5 @@ Building...
 
 ### Resources:
 * Eclipse - 2021-09
-* Java 11
-* Postgresql 14
+* Java 8
+* Postgresql 12

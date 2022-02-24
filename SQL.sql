@@ -1,12 +1,23 @@
-create table produtos(id serial Primary key, nome varchar(90), quantidade int, valor float, valorTotal float);
+CREATE DATABASE estoque
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Portuguese_Brazil.1252'
+    LC_CTYPE = 'Portuguese_Brazil.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
 
-insert into produtos(nome, quantidade, valor) values ('feijao', 40, 6.99);
-insert into produtos(nome, quantidade, valor) values ('arroz', 57, 3.78);
-insert into produtos(nome, quantidade, valor) values ('farinha', 36, 3.29);
-insert into produtos(nome, quantidade, valor) values ('oleo', 80, 7.56);
-insert into produtos(nome, quantidade, valor) values ('cafe', 48, 5.30);
-insert into produtos(nome, quantidade, valor) values ('cha', 32, 2.78);
-insert into produtos(nome, quantidade, valor) values ('ervilha', 28, 2.50);
-insert into produtos(nome, quantidade, valor) values ('milho', 28, 2.79);
 
-update produtos set valorTotal = valor*quantidade;
+
+
+CREATE TABLE IF NOT EXISTS public.produto
+(
+    id integer NOT NULL DEFAULT nextval('sequencia'::regclass),
+    nome character varying(90) COLLATE pg_catalog."default" NOT NULL,
+    preco numeric NOT NULL,
+    quantidade integer,
+    total numeric,
+    CONSTRAINT id_pk PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
