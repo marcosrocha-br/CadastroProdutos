@@ -3,6 +3,7 @@ Building...
 
 
 ### Resources:
-* Eclipse - 2021-09
-* Java 11
+* Apache Maven
 * Postgresql 14
+* JUnit 4
+* Java 11
